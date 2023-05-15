@@ -1,6 +1,6 @@
-import { createError } from "../error.js";
-import User from "../model/Users.js";
-import Video from "../model/Video.js";
+import { createError } from '../error.js';
+import User from '../model/Users.js';
+import Video from '../model/Video.js';
 
 //Upadate User
 export const update = async (req, res, next) => {
@@ -19,7 +19,7 @@ export const update = async (req, res, next) => {
       next(error);
     }
   } else {
-    return next(createError(403, "you can update only!"));
+    return next(createError(403, 'you can update only!'));
   }
 };
 
@@ -29,12 +29,12 @@ export const deleteUser = async (req, res, next) => {
     try {
       await User.findByIdAndDelete(req.params.id);
 
-      res.status(200).json("User has been deleted!");
+      res.status(200).json('User has been deleted!');
     } catch (error) {
       next(error);
     }
   } else {
-    return next(createError(403, "you can delete only!"));
+    return next(createError(403, 'you can delete only!'));
   }
 };
 
@@ -49,7 +49,7 @@ export const getUser = async (req, res, next) => {
 };
 
 //subscribe user
-export const subscribe = async (req, res, next) => {
+export const subscribedUsers = async (req, res, next) => {
   try {
     await User.findByIdAndUpdate(req.user.id, {
       $push: { subscribedUsers: req.params.id },
@@ -59,7 +59,7 @@ export const subscribe = async (req, res, next) => {
       $inc: { subscribers: 1 },
     });
 
-    res.status(200).json("succsessfully! sub done!");
+    res.status(200).json('succsessfully! sub done!');
   } catch (error) {
     next(error);
   }
@@ -75,7 +75,7 @@ export const unsubscribe = async (req, res, next) => {
       $inc: { subscribers: -1 },
     });
 
-    res.status(200).json("succsessfully! unsub done!");
+    res.status(200).json('succsessfully! unsub done!');
   } catch (error) {
     next(error);
   }
@@ -90,7 +90,7 @@ export const like = async (req, res, next) => {
       $addToSet: { likes: id },
       $pull: { dislikes: id },
     });
-    res.status(200).json("succsessfully! like done!");
+    res.status(200).json('succsessfully! like done!');
   } catch (error) {
     next(error);
   }
@@ -105,7 +105,7 @@ export const dislike = async (req, res, next) => {
       $addToSet: { dislikes: id },
       $pull: { likes: id },
     });
-    res.status(200).json("succsessfully! unlike done!");
+    res.status(200).json('succsessfully! unlike done!');
   } catch (error) {
     next(error);
   }
