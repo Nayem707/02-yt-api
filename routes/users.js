@@ -3,12 +3,10 @@ import {
   update,
   deleteUser,
   getUser,
+  subscribe,
   unsubscribe,
   like,
   dislike,
-  subscribedUsers,
-  //   like,
-  //   dsilike,
 } from '../controllers/users.js';
 import { verifyToken } from '../utils/verifyToken.js';
 
@@ -24,7 +22,7 @@ router.delete('/:id', verifyToken, deleteUser);
 router.get('/find/:id', verifyToken, getUser);
 
 //subscribe a user
-router.put('/sub/:id', verifyToken, subscribedUsers);
+router.put('/sub/:id', verifyToken, subscribe);
 
 //unsbuscribe a user
 router.put('/unsub/:id', verifyToken, unsubscribe);

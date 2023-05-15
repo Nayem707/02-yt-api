@@ -111,7 +111,7 @@ export const sub = async (req, res, next) => {
 };
 
 //Get A Tags
-export const getByags = async (req, res, next) => {
+export const getByTag = async (req, res, next) => {
   const tags = req.query.tags.split(',');
 
   try {
