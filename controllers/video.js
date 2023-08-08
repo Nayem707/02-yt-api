@@ -2,7 +2,7 @@ import { createError } from '../error.js';
 import Video from '../model/Video.js';
 import User from '../model/Users.js';
 
-//Add/POST Video
+//:POST-> New Video
 export const addVideo = async (req, res, next) => {
   const newVideo = new Video({ userId: req.user.id, ...req.body });
   try {
@@ -13,11 +13,12 @@ export const addVideo = async (req, res, next) => {
   }
 };
 
-//Update/PUT Video
+//:PUT-> Single Video Update
 export const updateVideo = async (req, res, next) => {
   try {
     const video = await Video.findById(req.params.id);
     if (!video) return next(createError(404, 'video not found!'));
+
     if (req.user.id === video.userId) {
       const updatedVideo = await Video.findByIdAndUpdate(
         req.params.id,
@@ -35,7 +36,7 @@ export const updateVideo = async (req, res, next) => {
   }
 };
 
-//Delete/DELETE Video
+//:DELETE-> Single Video "Only User Can Delete"
 export const deleteVideo = async (req, res, next) => {
   try {
     const video = await Video.findById(req.params.id);
@@ -51,7 +52,7 @@ export const deleteVideo = async (req, res, next) => {
   }
 };
 
-//Get/GET A Video
+//:GET-> Single Video
 export const getVideo = async (req, res, next) => {
   try {
     const video = await Video.findById(req.params.id);
@@ -61,7 +62,7 @@ export const getVideo = async (req, res, next) => {
   }
 };
 
-//add/PUT a view
+///:PUT-> add view -> When user Watch video then count Video...
 export const addView = async (req, res, next) => {
   try {
     await Video.findByIdAndUpdate(req.params.id, {
@@ -73,7 +74,7 @@ export const addView = async (req, res, next) => {
   }
 };
 
-//Get A random
+//:GET-> Random Videos
 export const random = async (req, res, next) => {
   try {
     const videos = await Video.aggregate([{ $sample: { size: 40 } }]);
@@ -83,7 +84,7 @@ export const random = async (req, res, next) => {
   }
 };
 
-//Get A trend
+//:GET-> Trends Videos
 export const trend = async (req, res, next) => {
   try {
     const videos = await Video.find().sort({ views: -1 });
@@ -93,7 +94,7 @@ export const trend = async (req, res, next) => {
   }
 };
 
-//Get A sub
+//:GET-> Subscribed user Videos
 export const sub = async (req, res, next) => {
   try {
     const user = await User.findById(req.user.id);
@@ -110,7 +111,7 @@ export const sub = async (req, res, next) => {
   }
 };
 
-//Get A Tags
+//:GET-> A Tags
 export const getByTag = async (req, res, next) => {
   const tags = req.query.tags.split(',');
 
@@ -122,7 +123,7 @@ export const getByTag = async (req, res, next) => {
   }
 };
 
-//Get A Search
+//:GET-> A Search Video
 export const search = async (req, res, next) => {
   const query = req.query.q;
   try {

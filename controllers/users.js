@@ -4,13 +4,14 @@ import Video from '../model/Video.js';
 
 //Upadate User
 export const update = async (req, res, next) => {
-  if (req.params.id === req.user.id) {
+  const paramId = req.params.id;
+  const userId = req.user.id;
+
+  if (paramId === userId) {
     try {
       const updateUser = await User.findByIdAndUpdate(
         req.params.id,
-        {
-          $set: req.body,
-        },
+        { $set: req.body },
         { new: true }
       );
 
